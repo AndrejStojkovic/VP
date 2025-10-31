@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mk.ukim.finki.wp.lab.model.Chef;
+import mk.ukim.finki.wp.lab.model.Dish;
 import mk.ukim.finki.wp.lab.service.ChefService;
 import mk.ukim.finki.wp.lab.service.DishService;
 import org.thymeleaf.context.WebContext;
@@ -59,7 +60,8 @@ public class ChefDetailsServlet extends HttpServlet {
             System.out.println(e.getMessage());
         }
         String dishId = request.getParameter("dishId");
-        Chef chef = chefService.addDishToChef(chefId, dishId);
+        Dish dish = dishService.findByDishId(dishId);
+        Chef chef = chefService.addDishToChef(chefId, dish.getDishId());
         response.sendRedirect("/chefDetails?chefId=" + chef.getId());
     }
 }
