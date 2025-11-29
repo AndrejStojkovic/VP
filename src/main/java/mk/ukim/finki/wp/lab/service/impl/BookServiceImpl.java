@@ -27,8 +27,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> searchBooks(String text, double rating) {
-        //return bookRepository.searchBooks(text, rating);
-        return new ArrayList<>();
+        return bookRepository.findAll().stream()
+            .filter(book -> book.getTitle().toLowerCase().contains(text.toLowerCase()) && book.getAverageRating() >= rating)
+            .toList();
     }
 
     @Override

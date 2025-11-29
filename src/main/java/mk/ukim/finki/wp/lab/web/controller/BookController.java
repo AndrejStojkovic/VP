@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
 import jakarta.servlet.http.HttpSession;
+import mk.ukim.finki.wp.lab.model.Author;
 import mk.ukim.finki.wp.lab.model.Book;
 import mk.ukim.finki.wp.lab.service.AuthorService;
 import mk.ukim.finki.wp.lab.service.BookService;
@@ -16,9 +17,11 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
+    private final AuthorService authorService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     @GetMapping
@@ -80,7 +83,9 @@ public class BookController {
         model.addAttribute("title", book.getTitle());
         model.addAttribute("genre", book.getGenre());
         model.addAttribute("averageRating", book.getAverageRating());
-        model.addAttribute("authorId", book.getAuthor().getId());
+        Author author = book.getAuthor();
+        model.addAttribute("authorId", author != null ? author.getId() : -1);
+        model.addAttribute("authors", authorService.findAll());
         return "book-form";
     }
 
