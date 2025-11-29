@@ -39,18 +39,17 @@
         <li th:each="lastViewedBook : ${lastViewedBooks}" th:text="${lastViewedBook}"></li>
     </ul>
     <form action="/books" method="GET">
-        <h2>Filter books:</h2>
-
-        <label>Name:</label>
-        <input type="text" name="filterName" required/>
+        <h2>Filter books by author:</h2>
+        <select name="filterAuthorId" required>
+            <option value="-1" th:selected="${filteredId == -1}">None</option>
+            <option th:each="author : ${authors}" th:value="${author.getId()}"
+                    th:text="${author.getName()} + ' ' + ${author.getSurname()}"
+                    th:selected="${filteredId == author.getId()}"></option>
+        </select>
         <br />
-
-        <label>Minimum rating:</label>
-        <input type="number" name="filterRating" step=".01" min="0" value="0" required />
-        <br />
-
         <button type="submit">Filter</button>
     </form>
+
     <form action="/bookReservation" method="POST">
         <h2>Choose a book:</h2>
 
