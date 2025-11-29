@@ -23,4 +23,8 @@ public class Book {
         this.genre = genre;
         this.averageRating = averageRating;
     }
+
+    public String getAuthorName() {
+        return author != null  ? author.getName() + " " + author.getSurname() : "None";
+    }
 }
