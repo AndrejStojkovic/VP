@@ -2,8 +2,10 @@ package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Author;
 import mk.ukim.finki.wp.lab.model.Book;
+import mk.ukim.finki.wp.lab.model.Genre;
 import mk.ukim.finki.wp.lab.repository.jpa.AuthorRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.BookRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.GenreRepository;
 import mk.ukim.finki.wp.lab.service.BookService;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +45,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book add(String title, String genre, Double averageRating, Long authorId) {
+    public List<Book> findBooksByGenreId(Long genreId) {
+        return bookRepository.findAllByGenre_Id(genreId);
+    }
+
+    @Override
+    public List<Book> findBooksByAuthorIdAndGenre(Long authorId, Long genreId) {
+        return bookRepository.findAllByAuthor_IdAndGenre_Id(authorId, genreId);
+    }
+
+    @Override
+    public Book add(String title, Genre genre, Double averageRating, Long authorId) {
         Author author = authorRepository.findById(authorId).orElse(null);
         Book book = new Book(title, genre, averageRating);
         book.setAuthor(author);
@@ -51,7 +63,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book update(Long id, String title, String genre, Double averageRating, Long authorId) {
+    public Book update(Long id, String title, Genre genre, Double averageRating, Long authorId) {
         Book book = findBook(id);
         Author author = authorRepository.findById(authorId).orElse(null);
         book.setTitle(title);

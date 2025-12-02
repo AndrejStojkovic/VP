@@ -39,12 +39,19 @@
         <li th:each="lastViewedBook : ${lastViewedBooks}" th:text="${lastViewedBook}"></li>
     </ul>
     <form action="/books" method="GET">
-        <h2>Filter books by author:</h2>
+        <h2>Filter books:</h2>
         <select name="filterAuthorId" required>
             <option value="-1" th:selected="${filteredId == -1}">None</option>
             <option th:each="author : ${authors}" th:value="${author.getId()}"
                     th:text="${author.getName()} + ' ' + ${author.getSurname()}"
                     th:selected="${filteredId == author.getId()}"></option>
+        </select>
+        <br />
+        <select name="filterGenreId" required>
+            <option value="-1" th:selected="${filteredGenreId == -1}">None</option>
+            <option th:each="genre : ${genres}" th:value="${genre.getId()}"
+                    th:text="${genre.getName()}"
+                    th:selected="${filteredGenreId == genre.getId()}"></option>
         </select>
         <br />
         <button type="submit">Filter</button>
@@ -56,7 +63,7 @@
         <div th:each="book : ${books}">
             <div class="book-entry">
                 <input type="radio" class="book-option" name="bookTitle" th:value="${book.getTitle()}"
-                        th:text="'Title: ' + ${book.getTitle()} + ', Genre: ' + ${book.getGenre()} + ', Rating: ' + ${book.getAverageRating()} + ', Author: ' + ${book.getAuthorName()}" required/>
+                        th:text="'Title: ' + ${book.getTitle()} + ', Genre: ' + ${book.getGenreName()} + ', Rating: ' + ${book.getAverageRating()} + ', Author: ' + ${book.getAuthorName()}" required/>
 
                 <button type="submit" name="edit" th:formaction="@{'/books/book-form/' + ${book.getId()}}" formmethod="get" formnovalidate>
                     Edit

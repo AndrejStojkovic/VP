@@ -31,7 +31,11 @@
         <br />
 
         <label>Genre:</label>
-        <input type="text" name="genre" th:value="${genre != null} ? ${genre} : ''" required/>
+        <select name="genreId">
+            <option th:each="genre : ${genres}" th:value="${genre.getId()}"
+                    th:text="${genre.getName()}"
+                    th:selected="${genre.getId() == genreId}"></option>
+        </select>
         <br />
 
         <label>Average rating:</label>

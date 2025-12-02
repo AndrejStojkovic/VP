@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.lab.repository.mock.impl;
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Author;
 import mk.ukim.finki.wp.lab.model.Book;
+import mk.ukim.finki.wp.lab.model.Genre;
 import mk.ukim.finki.wp.lab.repository.mock.InMemoryBookRepository;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +35,7 @@ public class InMemoryBookRepositoryImpl implements InMemoryBookRepository {
     }
 
     @Override
-    public Book add(String title, String genre, Double averageRating, Author author) {
+    public Book add(String title, Genre genre, Double averageRating, Author author) {
         Book book = new Book(title, genre, averageRating);
         book.setAuthor(author);
         DataHolder.books.add(book);
@@ -42,7 +43,7 @@ public class InMemoryBookRepositoryImpl implements InMemoryBookRepository {
     }
 
     @Override
-    public Book update(Long id, String title, String genre, Double averageRating, Author author) {
+    public Book update(Long id, String title, Genre genre, Double averageRating, Author author) {
         int idx = IntStream.range(0, DataHolder.books.size())
                 .filter(i -> DataHolder.books.get(i).getId().equals(id))
                 .findFirst()

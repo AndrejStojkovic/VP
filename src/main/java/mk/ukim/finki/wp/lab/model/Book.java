@@ -13,12 +13,13 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String genre;
+    @ManyToOne
+    private Genre genre;
     private double averageRating;
     @ManyToOne
     private Author author;
 
-    public Book(String title, String genre, double averageRating) {
+    public Book(String title, Genre genre, double averageRating) {
         this.title = title;
         this.genre = genre;
         this.averageRating = averageRating;
@@ -26,5 +27,9 @@ public class Book {
 
     public String getAuthorName() {
         return author != null  ? author.getName() + " " + author.getSurname() : "None";
+    }
+
+    public String getGenreName() {
+        return genre != null ? genre.getName() : "None";
     }
 }
