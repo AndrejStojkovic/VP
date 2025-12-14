@@ -33,7 +33,7 @@
 <header>
     <h1>Welcome to our Book Reservation App</h1>
 </header>
-<main>
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <h2>Recently viewed:</h2>
     <ul>
         <li th:each="lastViewedBook : ${lastViewedBooks}" th:text="${lastViewedBook}"></li>
@@ -65,17 +65,17 @@
                 <input type="radio" class="book-option" name="bookTitle" th:value="${book.getTitle()}"
                         th:text="'Title: ' + ${book.getTitle()} + ', Genre: ' + ${book.getGenreName()} + ', Rating: ' + ${book.getAverageRating()} + ', Author: ' + ${book.getAuthorName()}" required/>
 
-                <button type="submit" name="edit" th:formaction="@{'/books/book-form/' + ${book.getId()}}" formmethod="get" formnovalidate>
+                <button type="submit" name="edit" th:formaction="@{'/books/book-form/' + ${book.getId()}}" formmethod="get" formnovalidate sec:authorize="hasRole('ADMIN')">
                     Edit
                 </button>
 
-                <button type="submit" name="delete" th:formaction="@{'/books/delete/' + ${book.getId()}}" formmethod="post" formnovalidate>
+                <button type="submit" name="delete" th:formaction="@{'/books/delete/' + ${book.getId()}}" formmethod="post" formnovalidate sec:authorize="hasRole('ADMIN')">
                     Delete
                 </button>
             </div>
         </div>
 
-        <button type="submit" name="addBook" formaction="/books/book-form" formmethod="get" formnovalidate>
+        <button type="submit" name="addBook" formaction="/books/book-form" formmethod="get" formnovalidate sec:authorize="hasRole('ADMIN')">
             Add Book
         </button>
 
@@ -90,6 +90,6 @@
         <br/>
         <input type="submit" value="Reserve Book">
     </form>
-</main>
+</div>
 </body>
 </html>
